@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My service appointments</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <p class="brand">Dealer Service</p>
+    <h1>My service appointments</h1>
+    <p class="policy">You can cancel online up to 2 hours before your appointment. After that, please call your dealer.</p>
+  </header>
+
+  <main>
+    <div id="message" role="status" aria-live="polite"></div>
+
+    <section aria-labelledby="upcoming-heading">
+      <h2 id="upcoming-heading">Upcoming</h2>
+      <ul id="upcoming-list" class="appointments"></ul>
+    </section>
+
+    <section aria-labelledby="past-heading">
+      <h2 id="past-heading">Past and canceled</h2>
+      <ul id="past-list" class="appointments"></ul>
+    </section>
+  </main>
+
+  <dialog id="cancel-dialog" aria-labelledby="cancel-title">
+    <form method="dialog">
+      <h2 id="cancel-title">Cancel this appointment?</h2>
+      <p id="cancel-summary"></p>
+      <p class="fee-warning">Appointments canceled less than 24 hours before the start time may be charged a $25 late-cancellation fee.</p>
+      <div class="actions">
+        <button value="keep">Keep appointment</button>
+        <button value="confirm" class="danger">Cancel appointment</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="config.js"></script>
+  <script src="appointment-view.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
