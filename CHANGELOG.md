@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Use server-provided cancellation eligibility and show the exact inclusive deadline and actionable refusal reason.
+- Refresh stale appointment state from cancellation responses, including expected refusals.
+- Remove the retired cancellation fee warning.
+- Use Canceled consistently and retain completed, canceled, and no-show appointments in Past and canceled for 90 days.
+
 ## 2.3.0 (2026-09-29)
 
 - Updated the online cancellation window to 2 hours before the start time (cancellation policy v2, effective October 1, 2026).

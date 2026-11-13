@@ -136,11 +136,6 @@ dialog::backdrop {
   background: rgb(0 0 0 / 40%);
 }
 
-.fee-warning {
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
 .actions {
   display: flex;
   gap: 8px;

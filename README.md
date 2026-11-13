@@ -26,6 +26,21 @@ npm test
 | `public/config.js` | API base URL. |
 | `server.js` | Static file server for local development. |
 
+The API supplies `cancelDeadline` (UTC ISO 8601), `canCancel`, and
+`cancellationReason` on each appointment. The portal displays the exact deadline
+in the customer's local time with a time zone and trusts the server's eligibility
+decision rather than recalculating the cutoff using the customer's clock.
+Only booked appointments are eligible, through the inclusive two-hour deadline.
+Checked-in vehicles require contacting the service advisor; after the deadline,
+customers call their dealer.
+
+Cancellation responses return the bare appointment on success and
+`{ error, appointment }` on an expected 409 refusal. The portal immediately
+replaces the stale appointment with the server's current version and announces
+the refusal without a generic error. Completed, canceled, and no-show appointments
+appear under **Past and canceled** through 90 days after their start time,
+including the 90-day boundary. Cancellation and no-show fees do not apply.
+
 ## Related repositories
 
 - [dealer-appointments-api](https://github.com/cherryjain-msft/dealer-appointments-api): appointment data and cancellation.
