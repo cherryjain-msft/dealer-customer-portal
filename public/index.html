@@ -10,7 +10,7 @@
   <header class="site-header">
     <p class="brand">Dealer Service</p>
     <h1>My service appointments</h1>
-    <p class="policy">You can cancel online up to 2 hours before your appointment. After that, please call your dealer.</p>
+    <p class="policy">Booked appointments can be canceled online until 2 hours before the start time, including the cutoff time. After that, call your dealer. If your vehicle is checked in, contact your service advisor.</p>
   </header>
 
   <main>
@@ -27,11 +27,11 @@
     </section>
   </main>
 
-  <dialog id="cancel-dialog" aria-labelledby="cancel-title">
+  <dialog id="cancel-dialog" aria-labelledby="cancel-title" aria-describedby="cancel-summary cancel-deadline">
     <form method="dialog">
       <h2 id="cancel-title">Cancel this appointment?</h2>
       <p id="cancel-summary"></p>
-      <p class="fee-warning">Appointments canceled less than 24 hours before the start time may be charged a $25 late-cancellation fee.</p>
+      <p id="cancel-deadline"></p>
       <div class="actions">
         <button value="keep">Keep appointment</button>
         <button value="confirm" class="danger">Cancel appointment</button>

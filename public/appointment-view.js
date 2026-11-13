@@ -7,14 +7,12 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  // Customers can cancel online until this many hours before the start time.
-  const CANCEL_WINDOW_HOURS = 2;
   const HISTORY_DAYS = 90;
 
   const HOUR_MS = 60 * 60 * 1000;
   const DAY_MS = 24 * HOUR_MS;
 
-  const CLOSED_STATUSES = ['completed', 'cancelled', 'no_show'];
+  const CLOSED_STATUSES = ['completed', 'canceled', 'no_show'];
 
   const STATUS_LABELS = {
     booked: 'Booked',
@@ -22,7 +20,7 @@
     in_service: 'In service',
     ready_for_pickup: 'Ready for pickup',
     completed: 'Completed',
-    cancelled: 'Cancelled',
+    canceled: 'Canceled',
     no_show: 'No-show',
   };
 
@@ -34,10 +32,16 @@
     return CLOSED_STATUSES.includes(appointment.status);
   }
 
-  function canShowCancel(appointment, now = new Date()) {
-    if (isClosed(appointment)) return false;
-    const hoursUntilStart = (Date.parse(appointment.start) - now.getTime()) / HOUR_MS;
-    return hoursUntilStart > CANCEL_WINDOW_HOURS;
+  function canShowCancel(appointment) {
+    return appointment.status === 'booked' && appointment.canCancel === true;
+  }
+
+  function cancellationMessage(appointment) {
+    const deadline = formatDeadline(appointment.cancelDeadline);
+    if (canShowCancel(appointment)) {
+      return `You can cancel online through ${deadline}, including that time.`;
+    }
+    return `Online cancellation deadline: ${deadline}. ${appointment.cancellationReason}`;
   }
 
   function splitAppointments(appointments, now = new Date()) {
@@ -66,14 +70,29 @@
     });
   }
 
+  function formatDeadline(iso, locale = 'en-US') {
+    const deadline = new Date(iso);
+    return deadline.toLocaleString(locale, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+      ...(deadline.getMilliseconds() ? { fractionalSecondDigits: 3 } : {}),
+      timeZoneName: 'short',
+    });
+  }
+
   return {
-    CANCEL_WINDOW_HOURS,
     HISTORY_DAYS,
     CLOSED_STATUSES,
     statusLabel,
     isClosed,
     canShowCancel,
+    cancellationMessage,
     splitAppointments,
     formatStart,
+    formatDeadline,
   };
 });
